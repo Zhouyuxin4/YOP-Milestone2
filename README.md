@@ -130,7 +130,7 @@ git clone https://github.com/Zhouyuxin4/YOP-Milestone2.git
 
 2. Install backend dependencies
 ```bash
-cd YOPWebProject
+cd client
 npm install
 ```
 
