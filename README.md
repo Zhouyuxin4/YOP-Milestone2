@@ -197,10 +197,11 @@ const UserSchema = new mongoose.Schema({
 #### Sample User Data
 ```json
 {
-    "userName": "Alice",
-    "password": "newPassword123",
-    "profilePicture": "https://example.com/profiles/alice.jpg",
-    "journeys": ["journeyId1", "journeyId2"]
+    "_id":{"$oid":"672ea2402753b7432afe6308"},
+    "userName":"Alice",
+    "password":"password123",
+    "profilePicture":"https://example.com/profiles/alice.jpg",
+    "journeys":[{"$oid":"672ea18af3572752638a95f2"},{"$oid":"672ea18af3572752638a95f3"}]
 }
 ```
 
@@ -226,9 +227,10 @@ const JourneySchema = new mongoose.Schema({
 #### Sample Journey Data
 ```json
 {
-    "title": "Trip to the Mountains",
-    "userName": "userIdForAlice",
-    "details": ["journeyDetailId1", "journeyDetailId2"]
+    "_id":{"$oid":"672ea18af3572752638a95f2"},
+    "title":"Wonderful Summer Vacation",
+    "details":[{"$oid":"672e9e8c95993cdc1506605c"},{"$oid":"672e9e8c95993cdc1506605d"}],
+    "userName":{"$oid":"672ea2402753b7432afe6308"}
 }
 ```
 
@@ -270,14 +272,15 @@ const JourneyDetailsSchema = new mongoose.Schema({
 #### Sample Journey Details Data
 ```json
 {
-    "time": "2024-10-10T09:00:00Z",
-    "location": {
-        "type": "Point",
-        "coordinates": [40.7128, -74.0060]
+    "_id":{"$oid":"672e9e8c95993cdc1506605d"},
+    "time":{"$date":{"$numberLong":"1710756000000"}},
+    "location":{
+        "type":"Point",
+        "coordinates":[{"$numberDouble":"121.4737"},{"$numberDouble":"31.2304"}]
     },
-    "journalText": "Started my journey with a scenic view.",
-    "journalPhoto": "https://example.com/photos/journey1.jpg",
-    "journeyId": "journeyId1"
+    "journalText":"an update record in San Jose",
+    "journalPhoto":"http://example.com/updated-photo.jpg",
+    "journeyId":{"$oid":"672ea18af3572752638a95f2"}
 }
 ```
 
