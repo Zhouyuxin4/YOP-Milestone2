@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = "!yU7B2s9#KlM6@8tW5#Z$1pQ4&0cEr";
 
 exports.authenticateToken = (req, res, next) => {
     const token = req.header('Authorization')?.split(' ')[1];
@@ -9,7 +8,7 @@ exports.authenticateToken = (req, res, next) => {
     //if the request contains a token
     try {
         // verify the token
-        const decoded = jwt.verify(token, JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = { userId: decoded.userId }; //assign the decoded user id to the request
         next();
     } catch (error) {
