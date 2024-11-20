@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -8,7 +9,7 @@ const MONGODB_URI = 'mongodb+srv://fancy:xx437724154@cluster0.grz3m.mongodb.net/
 app.use(express.json());
 let cors = require("cors");
 app.use(cors());
-mongoose.connect(MONGODB_URI, {
+mongoose.connectprocess.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
@@ -40,8 +41,8 @@ const customHeadersAppLevel = function (req, res, next) {
     next();
 };
 app.all('*', customHeadersAppLevel);
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Server running on port ${process.env.PORT}`);
 });
 
 
