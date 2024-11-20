@@ -128,33 +128,37 @@ MongoDB Atlas for database hosting
 git clone https://github.com/Zhouyuxin4/YOP-Milestone2.git
 ```
 
-2. Install frontend dependencies
-```bash
-cd client
-npm install
-```
-
-3. Install backend dependencies
+2. Install backend dependencies
 ```bash
 cd server
 npm install
 ```
 
-4. Start the backend server
+3. Start the backend server
 ```bash
 npm start
 ```
 
+4. Install frontend dependencies
+```bash
+cd client
+npm install
+```
+
 5. Start the frontend application
 ```bash
-cd ..
-cd client
 npm start
 ```
 
 
 ## 2. Required Dependencies and Installation Commands
 ### Please check package.json to get all dependencies:
+    "@auth0/auth0-react": "^2.2.4"
+    "@react-google-maps/api": "^2.20.3"
+    "@testing-library/jest-dom": "^5.17.0"
+    "@testing-library/react": "^13.4.0"
+    "@testing-library/user-event": "^13.5.0"
+    "axios": "^1.7.7"
     "react": "^18.3.1"
     "react-dom": "^18.3.1"
     "react-router-dom": "^6.28.0"
@@ -165,11 +169,6 @@ npm start
     "express": "^4.21.1"
     "jsonwebtoken": "^8.5.1"
     "mongoose": "^8.8.1"
-    "@auth0/auth0-react": "^2.2.4"
-    "@react-google-maps/api": "^2.20.3"
-    "@testing-library/jest-dom": "^5.17.0"
-    "@testing-library/react": "^13.4.0"
-    "@testing-library/user-event": "^13.5.0"
   You can use npm install to install all the required dependencies in package.json
 
 
