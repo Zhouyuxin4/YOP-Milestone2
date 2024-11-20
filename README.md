@@ -128,16 +128,21 @@ MongoDB Atlas for database hosting
 git clone https://github.com/Zhouyuxin4/YOP-Milestone2.git
 ```
 
-2. Install backend dependencies
+2. Install frontend dependencies
 ```bash
 cd client
 npm install
 ```
 
-3. Start the backend server
+3. Install backend dependencies
 ```bash
 cd server
-node server.js
+npm install
+```
+
+4. Start the backend server
+```bash
+npm start
 ```
 
 5. Start the frontend application
