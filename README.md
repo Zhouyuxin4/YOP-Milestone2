@@ -74,55 +74,77 @@ git clone https://github.com/Zhouyuxin4/YOP-Milestone2.git
 ```
 
 2. Install backend dependencies
+```bash
 cd YOPWebProject
 npm install
+```
 
 3. Start the backend server
+```bash
 cd server
 node server.js
+```
 
 5. Start the frontend application
+```bash
 cd ..
 cd client
 npm start
+```
 
 ## API Endpoints
 ### User Routes
 
 GET /users - Get All Users
+
 GET /users/:userName - Get User by Username
+
 POST /users - Create New User
+
 DELETE /users/:userName - Delete User
+
 PUT /users/:username - Update user profile
+
 GET /users/:userName/search - Search User's Journeys
 
 
 ### Journey Routes
 
 GET /journeys/:username - Get all journeys
+
 GET /journeys/:userName/:journeyId- Get all journeys of one person
+
 POST /journeys/:username - Create new journey
+
 DELETE /journeys/:username/:journeyId - Delete journey
+
 PUT /journeys/:journeyId - update journey
 
 ### Journey Details Routes
 
 GET /details/:username/:journeyId/allDetails - Get all detail information of one journey  
+
 GET /details/:username/:journeyId/:detailId -  Get one detail information of one journey 
+
 POST /details/:userName/:journeyId/createDetails - Add journey detail
+
 PUT /details/:userName/:journeyId/:detailId/update - Update detail
+
 DELETE /details/:userName/:journeyId/:detailId - Delete detail
 
 
 ## Team Members
 
 Xiyu Fan - [Backend Developer/Database management and backend develop]
+
 Yuxin Zhou - [Frontend Developer/Frontend develop]
+
 Wenwen Han - [Frontend Developer/Frontend develop]
 
 ## Acknowledgments
 
 Google Maps API for location services
+
 MongoDB Atlas for database hosting
 
 ## License
