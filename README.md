@@ -149,22 +149,22 @@ npm start
 
 
 ## 2. Required Dependencies and Installation Commands
-- Please check package.json to get all dependencies:
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4""cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "jsonwebtoken": "^8.5.1",
+### Please check package.json to get all dependencies:
+    "react": "^18.3.1"
+    "react-dom": "^18.3.1"
+    "react-router-dom": "^6.28.0"
+    "react-scripts": "5.0.1"
+    "web-vitals": "^2.1.4""cors": "^2.8.5"
+    "dotenv": "^16.4.5"
+    "express": "^4.21.1"
+    "jsonwebtoken": "^8.5.1"
     "mongoose": "^8.8.1"
-    "@auth0/auth0-react": "^2.2.4",
-    "@react-google-maps/api": "^2.20.3",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
+    "@auth0/auth0-react": "^2.2.4"
+    "@react-google-maps/api": "^2.20.3"
+    "@testing-library/jest-dom": "^5.17.0"
+    "@testing-library/react": "^13.4.0"
     "@testing-library/user-event": "^13.5.0"
-- You can use npm install to install all the required dependencies in package.json
+  You can use npm install to install all the required dependencies in package.json
 
 
 ## 3. Database Setup Instructions
