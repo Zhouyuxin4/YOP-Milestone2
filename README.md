@@ -2,6 +2,14 @@
 
 Your Own Planet is an interactive travel journal platform that allows users to document and share their travel experiences through map interactions. Users can create personal accounts, record their journeys with specific locations, and add detailed entries including photos and descriptions for each place they've visited.
 
+## Team Members
+
+Xiyu Fan - [Backend Developer/Database management and backend develop]
+
+Yuxin Zhou - [Frontend Developer/Frontend develop]
+
+Wenwen Han - [Frontend Developer/Frontend develop]
+
 ## Features
 
 - User Authentication
@@ -38,60 +46,7 @@ Your Own Planet is an interactive travel journal platform that allows users to d
    - Save journey details
 4. Can view, edit, or delete existing journeys
 5. Search through personal travel records
-
-## Tech Stack
-
-### Frontend
-* React.js (https://reactjs.org/)
-  - Frontend JavaScript library
-  - Component-based UI development
-* Google Maps API (https://developers.google.com/maps)
-  - Interactive map integration
-  - Geographical data visualization
-* Axios for HTTP requests (https://axios-http.com/)
-  - Handles API requests to backend
-  - Data fetching and state updates
-
-### Backend
-* Node.js (https://nodejs.org/)
-  - Cross-platform runtime environment
-  - Built on Chrome's V8 JavaScript engine
-* Express.js (https://www.expresjs.org/)
-  - Web application framework for Node.js
-  - Handles routing and middleware integration
-* MongoDB (https://www.mongodb.com/)
-  - Stores data in flexible, JSON-like documents
-  - Provides high scalability and flexibility
-* JWT for authentication (https://jwt.io/)
-  - Secure user authentication
-  - Token-based session management
-
-## Setup and Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/Zhouyuxin4/YOP-Milestone2.git
-```
-
-2. Install backend dependencies
-```bash
-cd YOPWebProject
-npm install
-```
-
-3. Start the backend server
-```bash
-cd server
-node server.js
-```
-
-5. Start the frontend application
-```bash
-cd ..
-cd client
-npm start
-```
-
+   
 ## API Endpoints
 ### User Routes
 
@@ -133,29 +88,187 @@ PUT /details/:userName/:journeyId/:detailId/update - Update detail
 DELETE /details/:userName/:journeyId/:detailId - Delete detail
 
 
-## Team Members
+## Tech Stack
 
-Xiyu Fan - [Backend Developer/Database management and backend develop]
+### Frontend
+* React.js (https://reactjs.org/)
+  - Frontend JavaScript library
+  - Component-based UI development
+* Google Maps API (https://developers.google.com/maps)
+  - Interactive map integration
+  - Geographical data visualization
+* Axios for HTTP requests (https://axios-http.com/)
+  - Handles API requests to backend
+  - Data fetching and state updates
 
-Yuxin Zhou - [Frontend Developer/Frontend develop]
-
-Wenwen Han - [Frontend Developer/Frontend develop]
-
+### Backend
+* Node.js (https://nodejs.org/)
+  - Cross-platform runtime environment
+  - Built on Chrome's V8 JavaScript engine
+* Express.js (https://www.expresjs.org/)
+  - Web application framework for Node.js
+  - Handles routing and middleware integration
+* MongoDB (https://www.mongodb.com/)
+  - Stores data in flexible, JSON-like documents
+  - Provides high scalability and flexibility
+* JWT for authentication (https://jwt.io/)
+  - Secure user authentication
+  - Token-based session management
+ 
 ## Acknowledgments
 
 Google Maps API for location services
 
 MongoDB Atlas for database hosting
 
-## License
-This project is available for use under the MIT License.
+## 1. Setup
 
-## Environmental Variables
-### Database Configuration
+1. Clone the repository
+```bash
+git clone https://github.com/Zhouyuxin4/YOP-Milestone2.git
+```
+
+2. Install backend dependencies
+```bash
+cd YOPWebProject
+npm install
+```
+
+3. Start the backend server
+```bash
+cd server
+node server.js
+```
+
+5. Start the frontend application
+```bash
+cd ..
+cd client
+npm start
+```
+
+
+## 2. Required Dependencies and Installation Commands
+
+
+## 3. Database Setup Instructions
+The application uses a MongoDB database with three main collections: Users, Journeys, and JourneyDetails. Below are the schemas and sample data for each collection.
+### (1) User Schema
+The `UserSchema` defines each user's structure, including their username, password, profile picture, and associated journeys.
+
+```javascript
+const UserSchema = new mongoose.Schema({
+    userName: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    profilePicture: {
+        type: String,
+        default: ''
+    },
+    journeys: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Journeys'
+    }]
+}, { collection: 'Users' });
+```
+#### Sample User Data
+```json
+{
+    "userName": "Alice",
+    "password": "newPassword123",
+    "profilePicture": "https://example.com/profiles/alice.jpg",
+    "journeys": ["journeyId1", "journeyId2"]
+}
+```
+
+
+### (2) Journey Schema
+The JourneySchema defines the title of a journey, the user who created it, and references to associated details.
+```javascript
+const JourneySchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    details: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'JourneyDetails'
+    }],
+    userName: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users'
+    }
+}, { collection: 'Journeys' });
+```
+#### Sample Journey Data
+```json
+{
+    "title": "Trip to the Mountains",
+    "userName": "userIdForAlice",
+    "details": ["journeyDetailId1", "journeyDetailId2"]
+}
+```
+
+
+### (3) Journey Details Schema
+The JourneyDetailsSchema defines specific journey entries with time, location, journal text, and photos.
+```javascript
+const JourneyDetailsSchema = new mongoose.Schema({
+    time: {
+        type: Date,
+        required: true
+    },
+    location: {
+        type: {
+            type: String,
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
+    journalText: {
+        type: String,
+        required: true
+    },
+    journalPhoto: {
+        type: String,
+        required: true
+    },
+    journeyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Journeys',
+        required: true
+    }
+}, { collection: 'JourneyDetails' });
+```
+
+#### Sample Journey Details Data
+```json
+{
+    "time": "2024-10-10T09:00:00Z",
+    "location": {
+        "type": "Point",
+        "coordinates": [40.7128, -74.0060]
+    },
+    "journalText": "Started my journey with a scenic view.",
+    "journalPhoto": "https://example.com/photos/journey1.jpg",
+    "journeyId": "journeyId1"
+}
+```
+
+
+## 4. Environmental Variables
+### (1) Database Configuration
 MONGODB_URI=mongodb+srv://fancy:xx437724154@cluster0.grz3m.mongodb.net/YOP?retryWrites=true&w=majority&appName=Cluster0
 PORT=3000
-### JWT Configuration
+### (2) JWT Configuration
 JWT_SECRET=!yU7B2s9#KlM6@8tW5#Z$1pQ4&0cEr
 JWT_EXPIRATION=1h
-
-
