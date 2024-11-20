@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const Users = require('../models/Users.js');
 const Journeys = require('../models/Journeys.js');
 const JourneyDetails = require('../models/JourneyDetails.js');
-const JWT_SECRET = "!yU7B2s9#KlM6@8tW5#Z$1pQ4&0cEr";
 
 //Get all Users
 exports.getAllUsers = async (req, res) => {
@@ -47,7 +46,7 @@ exports.login = async (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials.' });
         }
         // If match, create a token
-        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
         res.status(200).json({ token, user: { userName: user.userName, profilePicture: user.profilePicture } });
     } catch (error) {
         res.status(500).json({ message: error.message });
