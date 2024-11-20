@@ -150,3 +150,12 @@ MongoDB Atlas for database hosting
 ## License
 This project is available for use under the MIT License.
 
+## Environmental Variables
+### Database Configuration
+MONGODB_URI=mongodb+srv://fancy:xx437724154@cluster0.grz3m.mongodb.net/YOP?retryWrites=true&w=majority&appName=Cluster0
+PORT=3000
+### JWT Configuration
+JWT_SECRET=!yU7B2s9#KlM6@8tW5#Z$1pQ4&0cEr
+JWT_EXPIRATION=1h
+
+
