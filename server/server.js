@@ -3,8 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const port = 3000;
-const MONGODB_URI = 'mongodb+srv://fancy:xx437724154@cluster0.grz3m.mongodb.net/YOP?retryWrites=true&w=majority&appName=Cluster0';
 
 app.use(express.json());
 let cors = require("cors");
