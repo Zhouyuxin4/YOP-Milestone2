@@ -300,5 +300,5 @@ JWT_EXPIRATION=1h
 
 ## Completed CRUD Operations 
 - Users: Create, Read, Update, Delete
-- Journeys: Create, Read, Delete
-- Journey Details: To be done
+- Journeys: Create, Read, Update, Delete
+- Journey Details: In progress
