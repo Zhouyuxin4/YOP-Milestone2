@@ -61,6 +61,31 @@ function JourneyDetails() {
         navigate('/homepageafterlogin'); 
     };
 
+        const handleUpdateJourney = async () => {
+        try {
+            const response = await axios.put(
+                `http://localhost:3000/journeys/${id}`,
+                {
+                    title: address,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                alert('Journey updated successfully');
+                navigate('/homepageafterlogin');
+            }
+
+        } catch (error) {
+            console.error('Error updating journey:', error);
+            alert('Failed to updating journey');
+        }
+    };
+
     const handleDeleteJourney = async () => {
         const isConfirmed = window.confirm('Are you sure you want to delete this journey?');
 
@@ -106,23 +131,11 @@ function JourneyDetails() {
                         required
                     />
                 </div>
-                <div>
-                    <textarea
-                        placeholder="Enter Description for your journey"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <input
-                        type="file"
-                        onChange={(e) => setPhoto(e.target.files[0])}
-                    />
-                </div>
+
                 <button type="submit">Upload Journey Details</button>
                 <button onClick={handleGoBack }>Back to My Homepage</button>
                 <button onClick={handleDeleteJourney} className="delete-button"> Delete Journey </button>
+                <button onClick={handleUpdateJourney}>Update Journey</button>
 
             </form>
         </div>
