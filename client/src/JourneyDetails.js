@@ -63,6 +63,13 @@ function JourneyDetails() {
 
         const handleUpdateJourney = async () => {
         try {
+
+            //Title cannot be empty
+            if (!address.trim()) {
+                alert('Title cannot be empty');
+                return; 
+            }
+
             const response = await axios.put(
                 `http://localhost:3000/journeys/${id}`,
                 {
