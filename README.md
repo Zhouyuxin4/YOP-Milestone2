@@ -296,3 +296,9 @@ PORT=3000
 ### (2) JWT Configuration
 JWT_SECRET=!yU7B2s9#KlM6@8tW5#Z$1pQ4&0cEr
 JWT_EXPIRATION=1h
+
+
+## Completed CRUD Operations 
+- Users: Create, Read, Update, Delete
+- Journeys: Create, Read, Delete
+- Journey Details: To be done
