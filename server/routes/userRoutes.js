@@ -1,11 +1,15 @@
 const express = require('express');
+const multer = require('multer');
 const router = express.Router();
 const userController = require('../controllers/userController.js');
 
+const upload = multer({ storage: multer.memoryStorage() });
 router.get('/', userController.getAllUsers);
 router.get('/:userName', userController.getuserName);
+router.post('/', upload.single('profilePicture'), userController.createUser);
 router.post('/', userController.createUser);
 router.delete('/:userName', userController.deleteUser);
+router.put('/:userName', upload.single('profilePicture'), userController.updateUser);
 router.put('/:userName', userController.updateUser);
 router.get('/:userName/search', userController.searchJourneys);
 

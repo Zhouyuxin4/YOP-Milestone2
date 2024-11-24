@@ -9,15 +9,39 @@ function ProfilePage() {
     const navigate = useNavigate();
 
 
-    const handleSave = (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
-            console.log('Edit Profile', { userName, password, profilePicture });
-            const user = {userName, password, profilePicture}
-            console.log(user)
-            axios.put(`http://localhost:3000/users/${userName}`, user).then(() => console.log('users profile updated.')).catch(err => {
-        console.error(err);
-      });
+        console.log('Edit Profile', { userName, password, profilePicture });
+        const formData = new FormData();
+        formData.append("userName", userName); 
+        formData.append("password", password);
+        if (profilePicture) 
+            formData.append('profilePicture', profilePicture);
+        console.log(userName);
+        console.log(password);
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+        try {
+            const response = await axios.put(
+                `http://localhost:3000/users/${userName}`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data', 
+                    },
+                }
+            );
+            const user = response.data;
+            localStorage.setItem('user', JSON.stringify(user));
+            console.log('User profile updated:', user);
+            alert('Profile updated successfully!');
+        } catch (err) {
+            console.error('Error updating profile:', err);
+            alert('Failed to update profile.');
+        }
     };
+
 
     const handleDelete = (e) => {
         e.preventDefault();
@@ -74,5 +98,4 @@ function ProfilePage() {
         </div>
     );
 }
-
 export default ProfilePage;

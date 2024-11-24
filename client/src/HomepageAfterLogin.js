@@ -6,12 +6,14 @@ import axios from 'axios';
 function HomepageAfterLogin({ userProfile }) {
     const [userName, setUserName] = useState('');
     const [journeys, setJourneys] = useState('');
+    const [profilePicture, setProfilePicture] = useState(null);
 
     useEffect (()=>{
         const loginUser = localStorage.getItem('user');
         if (loginUser) {
             const user = JSON.parse(loginUser);
             setUserName(user.userName);
+            setProfilePicture(user.profilePicture);
         }
     },[]);
 
@@ -75,7 +77,7 @@ function HomepageAfterLogin({ userProfile }) {
             <h1>Welcome to Your Own Planet, {userName}!</h1> 
             <div className='profile-info'>
               <img 
-                    src={userProfile?.picture || './image/default-profile.jpg'} 
+                    src={profilePicture || './image/default-profile.jpg'} 
                     alt="Profile" 
                     className="profile-picture" 
                 />

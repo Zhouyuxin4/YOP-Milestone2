@@ -5,9 +5,9 @@ import axios from 'axios';
 
 function SignIn() {
     const [isSignUp, setIsSignUp] = useState(false);
-    const [userName, setuserName] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [profilePicture, setprofilePicture] = useState(null);
+    const [profilePicture, setProfilePicture] = useState(null);
     const navigate = useNavigate();
 
     const handleToggle = () => setIsSignUp(!isSignUp);
@@ -17,9 +17,21 @@ function SignIn() {
     
         if (isSignUp) {
             console.log('Signing up:', { userName, password, profilePicture });
-            const user = { userName, password, profilePicture };
+            const formData = new FormData();
+            formData.append('userName', userName);
+            formData.append('password', password);
+            console.log(userName);
+            console.log(password);
+            console.log(formData.values());
+            if (profilePicture) {
+                formData.append('profilePicture', profilePicture);
+            }
             try {
-                const response = await axios.post('http://localhost:3000/users/', user);
+                const response = await axios.post('http://localhost:3000/users/', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
                 console.log('User created:', response.data);
                 alert('Sign up successfully! Please log in.');
                 navigate('/'); 
@@ -49,39 +61,39 @@ function SignIn() {
     return (
         <div className="sign-in-up-page">
             <div className='sign-in-box'>
-            <h1>{isSignUp ? 'Sign Up' : 'Sign In'}</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                <input
-                    type="text"
-                    placeholder="User ID"
-                    value={userName}
-                    onChange={(e) => setuserName(e.target.value)}
-                    required
-                />
-                </div>
-                <div>
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                </div>
-                <div>
-                {isSignUp && (
-                    <input
-                        type="file"
-                        onChange={(e) => setprofilePicture(e.target.files[0])}
-                    />
-                )}
-                </div>
-                <button type="submit">{isSignUp ? 'Sign Up' : 'Sign In'}</button>
-            </form>
-            <button onClick={handleToggle}>
-                {isSignUp ? 'Already have an account? Sign In' : 'New user? Sign Up'}
-            </button>
+                <h1>{isSignUp ? 'Sign Up' : 'Sign In'}</h1>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="User ID"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        {isSignUp && (
+                            <input
+                                type="file"
+                                onChange={(e) => setProfilePicture(e.target.files[0])}
+                            />
+                        )}
+                    </div>
+                    <button type="submit">{isSignUp ? 'Sign Up' : 'Sign In'}</button>
+                </form>
+                <button onClick={handleToggle}>
+                    {isSignUp ? 'Already have an account? Sign In' : 'New user? Sign Up'}
+                </button>
             </div>
             <div className='map-background'></div>
         </div>

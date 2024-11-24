@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
 
     profilePicture: {
         type: String,
-        default: ''
+        required: false
     },
 
     journeys: [{

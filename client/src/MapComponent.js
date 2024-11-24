@@ -8,8 +8,57 @@ const MapComponent = ({ apiKey }) => {
     const [markers, setMarkers] = useState([]);
     const [autocomplete, setAutocomplete] = useState(null);
     const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(null);
+    const [detailID, setDetailId] = useState(null);
     const [journeyName, setJourneyName] = useState('');
     const [journeyDescription, setJourneyDescription] = useState('');
+    const [user, setUser] = useState(null);
+    const [journeyId, setJourneyId] = useState(null);
+    const [error, setError] = useState(null);
+
+
+    useEffect(() => {
+        const fetchDetails = async () => {
+            const userStr = localStorage.getItem('user');
+            if (userStr) {
+                const userData = JSON.parse(userStr);
+                setUser(userData);
+                
+                console.log('User data loaded:', userData);
+            }
+
+            const pathArray = window.location.pathname.split('/');
+            const id = pathArray[pathArray.length - 1];
+            setJourneyId(id);
+
+            try {
+
+                const response = await axios.get(
+                    `http://localhost:3000/details/${id}/allDetails`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                        }
+                    }
+                );
+
+                // Convert to all details to markers
+                const existingMarkers = response.data.map(detail => ({
+                    lat: detail.location.coordinates[1],
+                    lng: detail.location.coordinates[0],
+                    title: detail.journalText,
+                    image: detail.journalPhoto,
+                }));
+
+                setMarkers(existingMarkers);
+                console.log('Loaded existing markers:', existingMarkers);
+            } catch (error) {
+                console.error('Error fetching existing details:', error);
+            }
+        };
+
+        fetchDetails();
+    }, []); 
+
     const mapContainerStyle = {
         width: '100%',
         height: '500px',
@@ -19,34 +68,22 @@ const MapComponent = ({ apiKey }) => {
         lng: -123.0650,
     };
 
-    useEffect(() => {
-        const fetchMarkers = async () => {
-            try {
-                const response = await axios.get('http://localhost:3000/journeys');
-                setMarkers(response.data);
-            } catch (error) {
-                console.error('Error fetching markers:', error);
-            }
-        };
-        fetchMarkers();
-    }, []); 
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+        throw new Error('No authentication token found');
+    }
 
-    const addMarker = (location) => {
-        const newMarker = {
-            lat: location.lat,
-            lng: location.lng,
-            title: '',
-            image: '',
-        };
-        setMarkers((current) => [...current, newMarker]);
-    };
+    const tokenPayload = JSON.parse(atob(authToken.split('.')[1]));
+    const userId = tokenPayload.userId; 
 
     const handleMapClick = (event) => {
         const newMarker = {
             lat: event.latLng.lat(),
             lng: event.latLng.lng(),
+            title: '',  
+            image: '',
         };
-        addMarker(newMarker);
+        setMarkers(prev => [...prev, newMarker]);
     };
 
     const onPlaceChanged = () => {
@@ -56,7 +93,7 @@ const MapComponent = ({ apiKey }) => {
                 lat: place.geometry.location.lat(),
                 lng: place.geometry.location.lng(),
             };
-            addMarker(location);
+            handleMapClick(location);
         }
     };
 
@@ -81,9 +118,71 @@ const MapComponent = ({ apiKey }) => {
 
     const handleSave = async (index) => {
         const marker = markers[index];
+
         try {
-            await axios.post('http://localhost:3000/journeys', marker);
-            setSelectedMarkerIndex(null);
+            console.log('Saving marker:', marker);
+            console.log('User:', user);
+            console.log('JourneyId:', journeyId);
+
+            if (!user?.userName || !journeyId) {
+                throw new Error('Missing user or journey information');
+            }
+
+            if (!marker.title?.trim()) {
+                alert('Please enter journal text before saving');
+                return;
+            }
+    
+            // if (!marker.image) {
+            //     alert('Please upload a photo before saving');
+            //     return;
+            // }
+    
+            //convert to backend journeyDetails Schema
+            const detailData = {
+                time: new Date().toISOString(),
+                location: {
+                    type: "Point",
+                    coordinates: [
+                        marker.lng,  
+                        marker.lat   
+                    ]
+                },
+                journalText: marker.title,   
+                journalPhoto: marker.image, 
+                journeyId: journeyId
+            };
+
+            console.log(detailData);
+
+            const response = await axios.post(`http://localhost:3000/details/${userId}/${journeyId}/createDetails`,
+            detailData,
+             {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                }
+            });
+
+            const newDetailId = response.data._id;
+            setDetailId(newDetailId);
+            localStorage.setItem('currentDetailId', newDetailId);
+
+            if (response.status === 200) {
+                alert('Detail saved successfully');
+                setSelectedMarkerIndex(null);
+
+                const updatedMarkers = [...markers];
+                updatedMarkers[index] = {
+                    ...marker,
+                    detailId: newDetailId,
+                    saved: true
+                };
+                setMarkers(updatedMarkers);
+
+                alert('Detail saved successfully');
+                setSelectedMarkerIndex(null);
+            }
+
         } catch (error) {
             console.error('Error saving marker:', error);
         }
@@ -94,12 +193,24 @@ const MapComponent = ({ apiKey }) => {
     };
 
     const handleDelete = async (index) => {
-        const markerId = markers[index]._id; 
-        try {
-            await axios.delete(`http://localhost:3000/journeys/${markerId}`);
+        const marker = markers[index];
+
+        if (!marker.detailId) {
+            // 如果是未保存的 marker，直接从数组中移除
             const updatedMarkers = markers.filter((_, i) => i !== index);
             setMarkers(updatedMarkers);
             setSelectedMarkerIndex(null);
+            return;
+        }
+
+        console.log('Deleting marker:', marker); 
+        try {
+            await axios.delete(`http://localhost:3000/details/${journeyId}/${detailID}`);
+            const updatedMarkers = markers.filter((_, i) => i !== index);
+            setMarkers(updatedMarkers);
+            setSelectedMarkerIndex(null);
+
+            console.log('Marker deleted successfully');
         } catch (error) {
             console.error('Error deleting marker:', error);
         }
@@ -118,6 +229,10 @@ const MapComponent = ({ apiKey }) => {
                         key={index}
                         position={{ lat: marker.lat, lng: marker.lng }}
                         onClick={() => setSelectedMarkerIndex(index)}
+                        // icon={marker.saved ? {
+                        //     url: 'path_to_saved_marker_icon',  // 可选：使用不同的图标
+                        //     scaledSize: new window.google.maps.Size(30, 30)
+                        // } : undefined}
                     />
                 ))}
 
@@ -138,7 +253,7 @@ const MapComponent = ({ apiKey }) => {
                         <textarea
                             type="text"
                             placeholder="Enter your memories here..."
-                            value={markers[selectedMarkerIndex].memories}
+                            value={markers[selectedMarkerIndex].title}
                             onChange={(e) => handleTitleChange(selectedMarkerIndex, e.target.value)}
                             style={{ width: '200px',
                                 marginBottom: '10px',
