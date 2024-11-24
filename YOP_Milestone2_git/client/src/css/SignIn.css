@@ -1,0 +1,24 @@
+.sign-in-up-page {
+  position: relative;
+  height: 100vh;
+}
+
+.sign-in-box {
+  position: absolute;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  z-index: 1;
+}
+
+.map-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../image/homepage.jpg');
+  background-size: cover;
+  opacity: 0.4;
+}
