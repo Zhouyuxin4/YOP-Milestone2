@@ -343,7 +343,7 @@ AWS_BUCKET_NAME=updatedpicturebucket
 ## 7. Accessibility
 
 ### Achievements
-![Lighthouse Performance Score](./assets/lighthouse-score.png)
+https://github.com/Zhouyuxin4/YOP-Milestone2/blob/main/assests/lighthouse-score.png?raw=true
 
 - Achieved all pages' Lighthouse accessibility score: 100/100
 - Implemented comprehensive screen reader support
