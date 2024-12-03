@@ -12,8 +12,8 @@ Wenwen Han: Frontend development, CSS Styling
 
 ## Version Information
 
-- **Final Version**: [YOP1202](link-to-YOP1202-repo)
-- **Development Version**: [YOP_Milestone2_git](link-to-milestone2-repo)
+- `YOP1202` - Final Version ✅ 
+- `YOP_Milestone2_git` - Milestone 2 Version
 
 Please refer to the final version (YOP1202) for the most up-to-date and stable release of the project.
 
