@@ -343,6 +343,8 @@ AWS_BUCKET_NAME=updatedpicturebucket
 ## 7. Accessibility
 
 ### Achievements
+![Lighthouse Performance Score](./assets/lighthouse-score.png)
+
 - Achieved all pages' Lighthouse accessibility score: 100/100
 - Implemented comprehensive screen reader support
 - Full keyboard navigation functionality
