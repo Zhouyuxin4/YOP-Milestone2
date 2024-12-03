@@ -8,7 +8,7 @@ Xiyu Fan: Database management and backend development
 
 Yuxin Zhou: Frontend development, API integration
 
-Wenwen Han: Frontend development
+Wenwen Han: Frontend development, CSS Styling
 
 ## Features
 
@@ -77,15 +77,15 @@ PUT /journeys/:journeyId - update journey
 
 ### Journey Details Routes
 
-GET /details/:username/:journeyId/allDetails - Get all detail information of one journey  
+GET /details/:journeyId/allDetails - Get all detail information of one journey  
 
 GET /details/:username/:journeyId/:detailId -  Get one detail information of one journey 
 
-POST /details/:userName/:journeyId/createDetails - Add journey detail
+POST /details/:journeyId/createDetails - Add journey detail
 
-PUT /details/:userName/:journeyId/:detailId/update - Update detail
+PUT /details/:journeyId/:detailId/update - Update detail
 
-DELETE /details/:userName/:journeyId/:detailId - Delete detail
+DELETE /details/:journeyId/:detailId - Delete detail
 
 
 ## Tech Stack
@@ -159,6 +159,7 @@ npm start
     "@testing-library/react": "^13.4.0"
     "@testing-library/user-event": "^13.5.0"
     "axios": "^1.7.7"
+    "lucide-react": "^0.462.0",
     "react": "^18.3.1"
     "react-dom": "^18.3.1"
     "react-router-dom": "^6.28.0"
@@ -169,6 +170,12 @@ npm start
     "express": "^4.21.1"
     "jsonwebtoken": "^8.5.1"
     "mongoose": "^8.8.1"
+    "@aws-sdk/client-s3": "^3.698.0",
+    "cookie-parser": "^1.4.7",
+    "js-cookie": "^3.0.5",
+    "js-cookies": "^1.0.4",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^3.0.1"
   You can use npm install to install all the required dependencies in package.json
 
 
@@ -263,7 +270,7 @@ const JourneyDetailsSchema = new mongoose.Schema({
     },
     journalPhoto: {
         type: String,
-        required: true
+        required: false
     },
     journeyId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -296,9 +303,13 @@ PORT=3000
 ### (2) JWT Configuration
 JWT_SECRET=!yU7B2s9#KlM6@8tW5#Z$1pQ4&0cEr
 JWT_EXPIRATION=1h
-
+### (3) AWS Configuration
+AWS_ACCESS_KEY_ID=AKIAYWBJYYP2CKQUUOSD
+AWS_SECRET_ACCESS_KEY=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
+AWS_REGION=ca-central-1
+AWS_BUCKET_NAME=updatedpicturebucket
 
 ## Completed CRUD Operations 
 - Users: Create, Read, Update, Delete
 - Journeys: Create, Read, Update, Delete
-- Journey Details: In progress
+- Journey Details: Create, Read, Update, Delete
