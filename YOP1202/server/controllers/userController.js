@@ -12,21 +12,16 @@ const s3Client = new S3Client({
   },
 });
 
-//Get all Users
-exports.getAllUsers = async (req, res) => {
-    try {
-        res.json({ message: "Hello from server!" });
-        //const userList = await Users.find();
-        //res.status(200).json(userList);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
 
 //Get User by Name
 exports.getuserName = async (req, res) => {
     try {
+        // find the user by username
         const user = await Users.findOne({ userName: req.params.userName });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+        // return the user
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -35,10 +30,12 @@ exports.getuserName = async (req, res) => {
 
 //Create User
 exports.createUser = async (req, res) => {
-    console.log(req)
-    const { userName, password } =  req.body;
-    const profilePicture = req.file
     try {
+        //get the data from the request
+        const { userName, password } =  req.body;
+        const profilePicture = req.file;
+
+        //upload the photo to s3 bucket
         let profilePictureUrl = null;
         if(profilePicture){
             const bucketName = process.env.AWS_BUCKET_NAME;
@@ -52,6 +49,8 @@ exports.createUser = async (req, res) => {
             await s3Client.send(command);
             profilePictureUrl = `https://${bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
         }
+
+        //create and save a new user
         const newUser = new Users({
             userName,
             password, 
@@ -65,21 +64,10 @@ exports.createUser = async (req, res) => {
     }
 };
 
-// exports.createUser = async (req, res) => {
-//     console.log(req)
-//     const user =  new Users(req.body);
-//     try {
-//         const newUser = await user.save();
-//         res.status(201).json(newUser);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
-
 //Log in
 exports.login = async (req, res) => {
-    const { userName, password } = req.body;
     try {
+        const { userName, password } = req.body;
         const user = await Users.findOne({ userName: userName });
         // If the user name doesn't exist
         if (!user || user.password !== password) {
@@ -96,8 +84,10 @@ exports.login = async (req, res) => {
 //Delete User
 exports.deleteUser = async (req, res) => {
     try {
+        // Get the user name from the request
         const userName = req.params.userName;
         const filter = {userName};
+        // Delete the user
         const user = await Users.findOneAndDelete(filter);
         if (!user) res.status(404).json( {message: 'User not found.'} );
         res.status(200).json({ message: 'User deleted successfully.' });
@@ -109,18 +99,16 @@ exports.deleteUser = async (req, res) => {
 //Update User
 exports.updateUser = async (req, res) => {
     try {
-        console.log(req.params);
-        console.log(req.body);
         const userName = req.params.userName;
         const updatedData = {};
         const profilePicture = req.file;
         const filter = {userName};
         let profilePictureUrl = null;
 
+        // Update the user data
         if (req.body.password) {
             updatedData.password = req.body.password; 
         }
-        console.log(profilePicture)
         if(profilePicture){
             console.log('updated image')
             const bucketName = process.env.AWS_BUCKET_NAME;
@@ -136,9 +124,9 @@ exports.updateUser = async (req, res) => {
             updatedData.profilePicture = profilePictureUrl;
             console.log("updated image url",updatedData.profilePicture)
         }
-        console.log(updatedData);
+
+        // Update the user
         const updatedUser = await Users.findOneAndUpdate(filter, updatedData, { new: true });
-        console.log(updatedUser);
         if (!updatedUser) {
             res.status(404).json({ message: 'User not found.' });
         }
@@ -147,35 +135,16 @@ exports.updateUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-// exports.updateUser = async (req, res) => {
-//     try {
-//         const userName = req.params.userName;
-//         const updatedData = req.body;
-//         const filter = {userName};
-//         console.log(updatedData)
 
-//         const updatedUser = await Users.findOneAndUpdate(filter, updatedData);
-
-//         if (!updatedUser) {
-//             res.status(404).json({ message: 'User not found.' });
-//         }
-//         res.status(200).json(updatedUser);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
 //Search Journey
 exports.searchJourneys = async (req, res) => {
     try {
-        console.log("enter processing search journey:")
         const userName = req.params.userName; //get the user userName
         const keyword = req.query.keyword; //get the keyword
-        console.log(userName)
-        console.log(keyword)
 
         const regex = new RegExp(keyword, 'i'); //create a regex to search for the keyword
 
-        const findUser = await Users.findOne({
+        const findUser = await Users.findOne({ //find the user by userName
             userName: userName
         })
         const requiredJourneysOne = await Journeys.find({
@@ -196,8 +165,7 @@ exports.searchJourneys = async (req, res) => {
         // get all qualified ids
         const qualifiedIds = new Set([...requiredJourneysOneIds, ...requiredJourneysTwoIds]);
         const requiredJourneys = await Journeys.find({ _id: {$in: Array.from(qualifiedIds) } }).populate('details');
-        console.log("The journeys are:")
-        console.log(requiredJourneys)
+        
         res.status(200).json(requiredJourneys);
 
     } catch (error) {
