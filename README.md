@@ -320,11 +320,11 @@ AWS_BUCKET_NAME=updatedpicturebucket
 - Journey Details: Create, Read, Update, Delete
 
 ## 6. Responsive Design
+
 ### Implementation
 - Utilized CSS Flexbox and Grid for flexible, dynamic layouts
 - Adaptive layout adjusts seamlessly to different screen sizes
 - No element overlap or unwanted scrollbars
-- The application has been tested on the following devices:
 
 ### Device Testing Coverage
 #### Desktop: 
@@ -343,10 +343,9 @@ AWS_BUCKET_NAME=updatedpicturebucket
 ## 7. Accessibility
 
 ### Achievements
-- ⭐ Achieved Lighthouse accessibility score: 100/100
-- 🔍 Implemented comprehensive screen reader support
-- ⌨️ Full keyboard navigation functionality
-- 🎯 WAI-ARIA compliant implementation
+- Achieved all pages' Lighthouse accessibility score: 100/100
+- Implemented comprehensive screen reader support
+- Full keyboard navigation functionality
 
 ### Key Features
 - Semantic HTML structure
@@ -360,14 +359,14 @@ AWS_BUCKET_NAME=updatedpicturebucket
 ## 8. Testing Implementation
 
 ### Unit Testing Coverage
-- ✅ Frontend Components 
+- Frontend Components 
   - User authentication components
   - Journey creation forms
   - JourneyDetail components
   - Map Component 
   - Layout/Header/Footer components
 
-- ✅ Backend Services
+- Backend Services
   - User management services
   - Journey operations
   - Data validation services
