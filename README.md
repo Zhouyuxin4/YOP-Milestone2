@@ -10,6 +10,13 @@ Yuxin Zhou: Frontend development, API integration
 
 Wenwen Han: Frontend development, CSS Styling
 
+## Version Information
+
+- **Final Version**: [YOP1202](link-to-YOP1202-repo)
+- **Development Version**: [YOP_Milestone2_git](link-to-milestone2-repo)
+
+Please refer to the final version (YOP1202) for the most up-to-date and stable release of the project.
+
 ## Features
 
 - User Authentication
