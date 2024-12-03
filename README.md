@@ -302,11 +302,15 @@ MONGODB_URI=mongodb+srv://fancy:xx437724154@cluster0.grz3m.mongodb.net/YOP?retry
 PORT=3000
 ### (2) JWT Configuration
 JWT_SECRET=!yU7B2s9#KlM6@8tW5#Z$1pQ4&0cEr
+
 JWT_EXPIRATION=1h
 ### (3) AWS Configuration
 AWS_ACCESS_KEY_ID=AKIAYWBJYYP2CKQUUOSD
+
 AWS_SECRET_ACCESS_KEY=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
+
 AWS_REGION=ca-central-1
+
 AWS_BUCKET_NAME=updatedpicturebucket
 
 ## Completed CRUD Operations 
