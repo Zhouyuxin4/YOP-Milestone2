@@ -6,13 +6,12 @@ const app = express();
 const cookieParser = require('cookie-parser');
 
 let cors = require("cors");
-// app.use(cors());
 
 app.use(cors({
-  origin: 'http://localhost:3001',  // 允许前端域名
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // 允许的请求方法
-  allowedHeaders: ['Content-Type', 'Authorization'], // 允许的请求头
-  credentials: true  // 允许发送认证信息（cookies, authorization headers）
+  origin: 'http://localhost:3001', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use(express.json());
@@ -54,6 +53,3 @@ app.all('*', customHeadersAppLevel);
 app.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
 });
-
-
-
