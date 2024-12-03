@@ -32,10 +32,9 @@ Wenwen Han: Frontend development, CSS Styling
   - Click-to-add location functionality
 
 - Journey Management
-  - View all personal journeys
-  - Add/Edit journey details
-  - Delete journeys
+  - View all journeys and their associated details on an interactive map
   - Search through journey records
+  - Create/Read/Delete/Edit journeys
 
 ## User Interaction Flow
 1. User creates an account/logs in
@@ -120,6 +119,8 @@ DELETE /details/:journeyId/:detailId - Delete detail
 Google Maps API for location services
 
 MongoDB Atlas for database hosting
+
+AWS S3 for image storage
 
 ## 1. Setup
 
@@ -313,7 +314,80 @@ AWS_REGION=ca-central-1
 
 AWS_BUCKET_NAME=updatedpicturebucket
 
-## Completed CRUD Operations 
+## 5. Completed CRUD Operations 
 - Users: Create, Read, Update, Delete
 - Journeys: Create, Read, Update, Delete
 - Journey Details: Create, Read, Update, Delete
+
+## 6. Responsive Design
+### Implementation
+- Utilized CSS Flexbox and Grid for flexible, dynamic layouts
+- Adaptive layout adjusts seamlessly to different screen sizes
+- No element overlap or unwanted scrollbars
+- The application has been tested on the following devices:
+
+### Device Testing Coverage
+#### Desktop: 
+- Windows Chrome (1920x1080)
+- MacBook Pro (2560x1600)
+
+#### Tablet: 
+- iPad Pro 11-inch
+- iPad Air
+
+#### Mobile:
+- iPhone 14 Pro
+- iPhone 13
+- Samsung Galaxy S21
+
+## 7. Accessibility
+
+### Achievements
+- ⭐ Achieved Lighthouse accessibility score: 100/100
+- 🔍 Implemented comprehensive screen reader support
+- ⌨️ Full keyboard navigation functionality
+- 🎯 WAI-ARIA compliant implementation
+
+### Key Features
+- Semantic HTML structure
+- ARIA labels and landmarks
+- Keyboard focus indicators
+- Color contrast compliance
+- Alt text for images
+- Focus management
+- Skip navigation links
+
+## 8. Testing Implementation
+
+### Unit Testing Coverage
+- ✅ Frontend Components 
+  - User authentication components
+  - Journey creation forms
+  - JourneyDetail components
+  - Map Component 
+  - Layout/Header/Footer components
+
+- ✅ Backend Services
+  - User management services
+  - Journey operations
+  - Data validation services
+  - API integration services
+
+### Testing Scope
+- CRUD Operations validation
+- Form input validation
+- External API integration tests
+- Error handling scenarios
+- User authentication flows
+
+### Testing Tools Used
+- **Jest**: Primary testing framework for React components
+  - Component rendering tests
+  - State management tests
+  - Event handling tests
+
+- **Mocha**: Backend testing framework
+  - API endpoint testing
+  - Database operations
+  - Service layer testing
+
