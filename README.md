@@ -4,7 +4,7 @@ Your Own Planet is an interactive travel journal platform that allows users to d
 
 ## Team Members
 
-Xiyu Fan: Database management and backend development
+Xiyu Fan: Backend development, Database management  
 
 Yuxin Zhou: Frontend development, API integration
 
